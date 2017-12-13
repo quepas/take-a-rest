@@ -4,10 +4,10 @@ Simple tutorial for your first REST API. And then, just take a rest.
 
 ## Introduction
 
-In this tutorial you will learn how to start a HTTP server, parse URL parameters, use different HTTP methods and prepare very simple REST API linked with even simpler database. One step at a time. Each presented example tries to answer one question:
+In this tutorial you will learn how to start a HTTP server, parse URL parameters (and queries), use different HTTP methods and prepare very simple REST API linked with even simpler database. One step at a time. Each presented example tries to answer one question:
 
 * **01_HttpServer** - Q: _How to start a HTTP server?_
-* **02_UrlParameters** - Q: _How to extract URL parameters from HTTP requests?_
+* **02_UrlParameters** - Q: _How to extract URL parameters (and queries) from HTTP requests?_
 * **03_HttpMethods** - Q: _How to use different HTTP methods (e.g. GET, POST, DELETE)?_
 * **04_RestDatabase** - Q: _How to prepare a simple REST API integrated with even simpler database (JSON file; `lowdb` package)?_
 
