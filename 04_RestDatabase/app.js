@@ -11,6 +11,7 @@ const db = low(adapter);
 /* Fill database with empty "patient" array */
 db.defaults({ patient: [] }).write();
 
+/* GET / -- Show main page */
 app.get("/", function(request, response) {
   printReqSummary(request);
   response
@@ -113,10 +114,14 @@ app.delete("/patient/:id", function(request, response) {
 
 app.listen(3000);
 
+/******************************************************************
+ * Helper functions
+ ******************************************************************/
 function printReqSummary(request) {
   console.log(`Handling ${request.method} ${request.originalUrl}`);
 }
 
+/* Get patient from database with given id */
 function getPatient(id) {
   return db
     .get("patient")
@@ -124,6 +129,7 @@ function getPatient(id) {
     .value();
 }
 
+/* Check if database contains any patients */
 function anyPatients() {
   return (
     db
@@ -133,6 +139,7 @@ function anyPatients() {
   );
 }
 
+/* Generate id for a new patient */
 function generatePatientId() {
   if (anyPatients()) {
     const lastPatient = db
