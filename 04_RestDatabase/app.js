@@ -40,10 +40,7 @@ app.get("/patient/:id", function(request, response) {
   printReqSummary(request);
   if (anyPatients()) {
     const id = Number(request.params.id);
-    const patient = db
-      .get("patient")
-      .find({ id: id })
-      .value();
+    const patient = getPatient(id);
     /* Check if the item is in the collection */
     if (patient !== undefined) {
       response.status(200).send(JSON.stringify(patient));
@@ -76,10 +73,7 @@ app.post("/patient", function(request, response) {
 /* PUT /patient/:id?name=:NAME&surname=:SURNAME -- modify patient with :id */
 app.put("/patient/:id", function(request, response) {
   let id = Number(request.params.id);
-  const patient = db
-    .get("patient")
-    .find({ id: id })
-    .value();
+  const patient = getPatient(id);
   if (patient === undefined) {
     response.status(404).send({ error: "No patient with given id" });
   } else {
@@ -105,10 +99,7 @@ app.put("/patient/:id", function(request, response) {
 app.delete("/patient/:id", function(request, response) {
   printReqSummary(request);
   let id = Number(request.params.id);
-  const patient = db
-    .get("patient")
-    .find({ id: id })
-    .value();
+  const patient = getPatient(id);
   if (patient === undefined) {
     response.status(404).send({ error: "No patient with given id" });
   } else {
@@ -124,6 +115,13 @@ app.listen(3000);
 
 function printReqSummary(request) {
   console.log(`Handling ${request.method} ${request.originalUrl}`);
+}
+
+function getPatient(id) {
+  return db
+    .get("patient")
+    .find({ id: id })
+    .value();
 }
 
 function anyPatients() {
