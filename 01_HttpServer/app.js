@@ -13,9 +13,7 @@ app.get("/", function(request, response) {
 /* Handle `hello` subpage */
 app.get("/hello", function(request, response) {
   printReqSummary(request);
-  response.send(
-    "<h2>Anonymous message</h2><p>Message for: who are you btw?</p>"
-  );
+  response.send("<p>Anonymous message: Oh, Hi Mark!</p>");
 });
 
 /* Start HTTP server at port 3000 (type in the browser: http://localhost:3000/) */
