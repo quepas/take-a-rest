@@ -17,7 +17,7 @@ app.get("/", function(request, response) {
 /* Show all items from the collection */
 app.get("/item", function(request, response) {
   printReqSummary(request);
-  response.send(`<h2>Show all items</h2><p>Items: ${items.toString()}</p>`);
+  response.send(`<p>Available items: ${items.toString()}</p>`);
 });
 
 /* Add (put) new item to the collection */
@@ -25,11 +25,11 @@ app.put("/item/:name", function(request, response) {
   printReqSummary(request);
   let itemName = request.params.name;
   /* Check if the item is in the collection */
-  if (!items.includes(itemName)) {
+  if (items.includes(itemName)) {
+    response.send(`<p>Item "${itemName}" already in collection</p>`);
+  } else {
     items.push(itemName);
     response.send(`<p>Item "${itemName}" added successfully</p>`);
-  } else {
-    response.send(`<p>Item "${itemName}" already in collection</p>`);
   }
 });
 
