@@ -8,28 +8,30 @@ const FileSync = require("lowdb/adapters/FileSync");
 const adapter = new FileSync("04_RestDatabase/db.json");
 const db = low(adapter);
 
-/* Fill database with default values */
-db.defaults({ patient: [], appointment: [] }).write();
+/* Fill database with empty "patient" array */
+db.defaults({ patient: [] }).write();
 
 app.get("/", function(request, response) {
   printReqSummary(request);
-  response.send(
-    "<h2>REST + Database</h2><ul>" +
-      "<li>Show all patients (GET /patient )</li>" +
-      "<li>Show specific patient (GET /patient/:id)</li>" +
-      "<li>Add new patient (POST /patient?name=:NAME&surname=:SURNAME)</li>" +
-      "<li>Modify existing patient (PUT /patient/:id?name=:NAME&surname=:SURNAME)</li>" +
-      "<li>Remove patient (DELETE /patient/:id)</li></ul>"
-  );
+  response
+    .status(200)
+    .send(
+      "<h2>REST + Database</h2><ul>" +
+        "<li>Show all patients (GET /patient )</li>" +
+        "<li>Show specific patient (GET /patient/:id)</li>" +
+        "<li>Add new patient (POST /patient?name=:NAME&surname=:SURNAME)</li>" +
+        "<li>Modify existing patient (PUT /patient/:id?name=:NAME&surname=:SURNAME)</li>" +
+        "<li>Remove patient (DELETE /patient/:id)</li></ul>"
+    );
 });
 
 /* GET /patient -- Show all patients */
 app.get("/patient", function(request, response) {
   printReqSummary(request);
   if (anyPatients()) {
-    response.send(JSON.stringify(db.get("patient").value()));
+    response.status(200).send(JSON.stringify(db.get("patient").value()));
   } else {
-    response.send({ error: "No patients are registered" });
+    response.status(404).send({ error: "No patients are registered" });
   }
 });
 
@@ -44,12 +46,12 @@ app.get("/patient/:id", function(request, response) {
       .value();
     /* Check if the item is in the collection */
     if (patient !== undefined) {
-      response.send(JSON.stringify(patient));
+      response.status(200).send(JSON.stringify(patient));
     } else {
-      response.send({ error: "Invalid patient id" });
+      response.status(404).send({ error: "No patient with given id" });
     }
   } else {
-    response.send({ error: "No patients are registered" });
+    response.status(404).send({ error: "No patients are registered" });
   }
 });
 
@@ -59,7 +61,7 @@ app.post("/patient", function(request, response) {
   const name = request.query.name;
   const surname = request.query.surname;
   if (name === undefined || surname === undefined) {
-    response.send({ error: "Missing data (name and/or surname)" });
+    response.status(400).send({ error: "Missing data (name and/or surname)" });
   } else {
     const newId = generatePatientId();
     const newPatient = { id: newId, name: name, surname: surname };
@@ -67,7 +69,7 @@ app.post("/patient", function(request, response) {
       .get("patient")
       .push(newPatient)
       .write();
-    response.send(newPatient);
+    response.status(200).send(newPatient);
   }
 });
 
@@ -79,12 +81,14 @@ app.put("/patient/:id", function(request, response) {
     .find({ id: id })
     .value();
   if (patient === undefined) {
-    response.send({ error: "Invalid patient id" });
+    response.status(404).send({ error: "No patient with given id" });
   } else {
     const name = request.query.name;
     const surname = request.query.surname;
     if (name === undefined || surname === undefined) {
-      response.send({ error: "Missing data (name and/or surname)" });
+      response
+        .status(400)
+        .send({ error: "Missing data (name and/or surname)" });
     } else {
       const updatedPatient = { id: patient.id, name: name, surname: surname };
       db
@@ -92,7 +96,7 @@ app.put("/patient/:id", function(request, response) {
         .find(patient)
         .assign(updatedPatient)
         .write();
-      response.send(updatedPatient);
+      response.status(200).send(updatedPatient);
     }
   }
 });
@@ -106,13 +110,13 @@ app.delete("/patient/:id", function(request, response) {
     .find({ id: id })
     .value();
   if (patient === undefined) {
-    response.send({ error: "Invalid patient id" });
+    response.status(404).send({ error: "No patient with given id" });
   } else {
     db
       .get("patient")
       .remove({ id: id })
       .write();
-    response.send({ message: "Patient removed successfully" });
+    response.status(200).send({ message: "Patient removed successfully" });
   }
 });
 
