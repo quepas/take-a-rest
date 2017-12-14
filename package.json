@@ -1,5 +1,6 @@
 {
   "name": "take-a-rest",
+  "author": "Patryk Kiepas",
   "version": "1.0.0",
   "license": "MIT",
   "repository": {
@@ -13,7 +14,7 @@
     "04_RestDatabase": "node 04_RestDatabase/app.js"
   },
   "dependencies": {
-    "express": "4.16.2",
-    "lowdb": "1.0.0"
+    "express": "^4.16.2",
+    "lowdb": "^1.0.0"
   }
 }
