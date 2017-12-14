@@ -1,6 +1,7 @@
 var express = require("express");
 var app = express();
 
+/* GET / -- Show main page */
 app.get("/", function(request, response) {
   printReqSummary(request);
   response.send(
@@ -10,14 +11,14 @@ app.get("/", function(request, response) {
   );
 });
 
-/* Handle named `hello` subpage */
+/* GET /hello/:name -- Show normal message for a named person */
 app.get("/hello/:name", function(request, response) {
   printReqSummary(request);
   /* Grab URL parameters from `request.params` object */
   response.send(`<p>Normal message for: ${request.params.name}</p>`);
 });
 
-/* Handle `hello` subpage with full information */
+/* GET /hello/:name/:surname -- Show special message with plenty of parameters */
 app.get("/hello/:name/:surname", function(request, response) {
   printReqSummary(request);
   /* Grab (optional) URL queries from `request.query` object */

@@ -4,6 +4,7 @@ var app = express();
 /* Store items collection in this array */
 let items = [];
 
+/* GET / -- Show main page */
 app.get("/", function(request, response) {
   printReqSummary(request);
   response.send(
@@ -24,7 +25,7 @@ app.get("/item", function(request, response) {
 app.put("/item/:name", function(request, response) {
   printReqSummary(request);
   let itemName = request.params.name;
-  /* Check if the item is in the collection */
+  /* Is the item in collection? */
   if (items.includes(itemName)) {
     response.send(`<p>Item "${itemName}" already in collection</p>`);
   } else {
@@ -37,7 +38,7 @@ app.put("/item/:name", function(request, response) {
 app.delete("/item/:name", function(request, response) {
   printReqSummary(request);
   let itemName = request.params.name;
-  /* Check if the item is in the collection */
+  /* Is the item in collection? */
   if (items.includes(itemName)) {
     items = items.filter(item => item !== itemName);
     response.send(`<p>Item "${itemName}" removed successfully</p>`);
