@@ -14,13 +14,13 @@ app.get("/", function(request, response) {
   );
 });
 
-/* Show all items from the collection */
+/* GET /item -- Show all items from the collection */
 app.get("/item", function(request, response) {
   printReqSummary(request);
   response.send(`<p>Available items: ${items.toString()}</p>`);
 });
 
-/* Add (put) new item to the collection */
+/* PUT /item/:name -- add (put) new item to the collection */
 app.put("/item/:name", function(request, response) {
   printReqSummary(request);
   let itemName = request.params.name;
@@ -33,7 +33,7 @@ app.put("/item/:name", function(request, response) {
   }
 });
 
-/* Delete a given item from the collection */
+/* DELETE /item/:name -- remove a given item from the collection */
 app.delete("/item/:name", function(request, response) {
   printReqSummary(request);
   let itemName = request.params.name;
