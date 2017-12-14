@@ -31,12 +31,11 @@ For project installation and management we will use [NPM Package Manager](https:
 * Install required packages using NPM command `npm install`
 * Run example code using `npm run 01_HttpServer`
 * **FOR TESTING**: Check if you have [cURL](https://curl.haxx.se/), otherwise install it
-* **OPTIONAL IN THE FUTURE**: Replace `lowdb` with your favourite database (e.g. PostgreSQL, MySQL, MongoDB)
 
 ### Running example
 
 In order to run code just type in console `npm run 01_HttpServer` (or one of: `02_UrlParameters`, `03_HttpMethods`, `04_RestDatabase`).
-Or you can just type `node SCRIPT` where script is a path to your JavaScript code.
+Or you node directly `node scriptName.js`.
 
 In order to interact with the server use _cURL_ utility from your console.
 To specify a HTTP method use option `-X` as follow:
@@ -53,18 +52,26 @@ curl -X PUT "localhost:3000/item/bicycle"
 curl -X DELETE "localhost:3000/item/bicycle"
 ```
 
-## Examples
+### Possible errors
 
-### Description
+* **Address In Use** [`Error: listen EADDRINUSE :::3000`] - another server and/or service is using port 3000. Close this process (might be hidden) or use different port number for you server.
 
-#### 01_HttpServer
+## Tutorial
 
-## Possible errors
+### 01_HttpServer
 
-* `Error: listen EADDRINUSE :::3000` - you are running a http server on a given port number (here 3000), but another server is already using it. Close previous server process (might be hidden) or use different port number for you server.
+### 02_UrlParameters
+
+### 03_HttpMethods
+
+### 04_RestDatabase
+
+### Future extensions
+
+* Replace [lowdb](https://github.com/typicode/lowdb) with your favourite database (e.g. [PostgreSQL](https://www.postgresql.org/), [MySQL](https://www.mysql.com/), [MongoDB](https://www.mongodb.com/))
 
 ## Additional materials
 
-* [Express Database Integration](http://expressjs.com/en/guide/database-integration.html) (MySQL, PostgreSQL, SQLite and many others)
+* [Express + Database Integration](http://expressjs.com/en/guide/database-integration.html) (MySQL, PostgreSQL, SQLite and many others)
 * [Express API documentation](http://expressjs.com/en/4x/api.html)
 * [Node.js tutorial](https://www.tutorialspoint.com/nodejs/index.htm)
