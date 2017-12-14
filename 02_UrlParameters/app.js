@@ -4,8 +4,9 @@ var app = express();
 app.get("/", function(request, response) {
   printReqSummary(request);
   response.send(
-    "<h2>URL Parameters (and Queries)</h2>" +
-      "<p>Go to /hello/:name or /hello/:name/:surname?:age=NUMBER&:height=NUMBER subpage!</p>"
+    "<h2>URL Parameters (and Queries)</h2><ul>" +
+      "<li>Show normal message (GET /hello/:name)</li>" +
+      "<li>Show special message (GET /hello/:name/:surname?age=NUMBER&height=NUMBER)</li></ul>"
   );
 });
 
@@ -13,21 +14,18 @@ app.get("/", function(request, response) {
 app.get("/hello/:name", function(request, response) {
   printReqSummary(request);
   /* Grab URL parameters from `request.params` object */
-  response.send(
-    `<h2>A bit special message</h2><p>Message for: ${request.params.name}</p>`
-  );
+  response.send(`<p>Normal message for: ${request.params.name}</p>`);
 });
 
 /* Handle `hello` subpage with full information */
 app.get("/hello/:name/:surname", function(request, response) {
   printReqSummary(request);
-  /* Grab URL queries from `request.query` object */
+  /* Grab (optional) URL queries from `request.query` object */
   var age = request.query.age !== null ? request.query.age : "unknown";
   var height = request.query.height !== null ? request.query.height : "unknown";
   response.send(
-    "<h2>A very special message</h2>" +
-      `<p>Message for: ${request.params.name} ${request.params.surname}` +
-      ` (age: ${age}, height: ${height})</p>`
+    `<p>Special message for: ${request.params.name} ${request.params.surname}` +
+      ` (age: ${age} years, height: ${height} cm)</p>`
   );
 });
 
