@@ -20,7 +20,7 @@ This tutorial is build over [node.js](https://nodejs.org/en/) infrastructure wit
 * [Express](http://expressjs.com) - a minimal web framework (for _building http server_, _handling request/response_)
 * [lowdb](https://github.com/typicode/lowdb) - single JSON file database (for _data access and storage_)
 
-For project installation and management we will use [NPM Package Manager](https://www.npmjs.com/).
+For project installation and management we will use [NPM Package Manager](https://www.npmjs.com/). For testing servers and REST APIs we will use [Postman](https://www.getpostman.com/).
 
 ### Installation
 
@@ -30,10 +30,8 @@ For project installation and management we will use [NPM Package Manager](https:
 * Go to the project directory `cd take-a-rest`
 * Install required packages using NPM command `npm install`
 * Run example code using `npm run 01_HttpServer`
-
-In the futher part of the tutorial replace `lowdb` database:
-
-* Install your favourite database (e.g. PostgreSQL, MySQL, MongoDB)
+* **FOR TESTING**: Download and install [Postman](https://www.getpostman.com/) (or install as a Chrome extension _[deprecated]_)
+* **OPTIONAL IN THE FUTURE**: Replace `lowdb` with your favourite database (e.g. PostgreSQL, MySQL, MongoDB)
 
 ### Running example
 

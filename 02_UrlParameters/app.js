@@ -5,7 +5,7 @@ app.get("/", function(request, response) {
   printReqSummary(request);
   response.send(
     "<h2>URL Parameters (and Queries)</h2>" +
-      "<p>Go to /hello/:name or /hello/:name/:surname?:age=0&:height=0 subpage!</p>"
+      "<p>Go to /hello/:name or /hello/:name/:surname?:age=NUMBER&:height=NUMBER subpage!</p>"
   );
 });
 
@@ -31,7 +31,7 @@ app.get("/hello/:name/:surname", function(request, response) {
   );
 });
 
-var server = app.listen(3000);
+app.listen(3000);
 
 function printReqSummary(request) {
   console.log(`Handling ${request.method} ${request.originalUrl}`);
