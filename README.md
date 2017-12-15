@@ -77,12 +77,12 @@ This method will help us until the end of the tutorial.
 
 ### 02_UrlParameters
 
-The second example extends previous HTTP server with extracting parameters and queries from request URLs.
+The second example extends previous HTTP server with extraction of parameters and queries from request URLs.
 Parameters belong to the URL path, thus they need to be marked in the URL pattern (in _Express_ we use colon to mark a parameter in URL e.g. `/hello/:name`).
-This pattern tells us to handle any URL beginning with `/hello/`, followed by single part of a path.
+This pattern tells us to handle any URL beginning with `/hello/`, followed by a single part of a path.
 
-The queries represents additional data passed in URL.
-They are always at the end of URL path after `?` sign.
+The queries represents additional data passed in a URL.
+They are always at the end of the URL path after `?` sign.
 A single query consists of a key and a value.
 Many queries can be chained with `&` sign.
 For example: `/patient?name=John&surname=Doe`.
@@ -105,17 +105,29 @@ In order to remove an item with given name, use `DELETE /item/:name` request.
 | DELETE      | Delete resource         |
 
 It is worth to notice that handling different HTTP methods requires only a change of _Express_ method, for example from `app.get()` to `app.put()`.
-But having a proper behaviour of a request (`DELETE` method removes resource at given URL, [idempotence](http://www.restapitutorial.com/lessons/idempotency.html) property etc.) still depends on a programmer a.k.a you.
+But having an excepted behaviour of a request (`DELETE` method removes resource at given URL, [idempotence](http://www.restapitutorial.com/lessons/idempotency.html) property etc.) depends solely on a programmer a.k.a you.
 
 ### 04_RestDatabase
 
-HTTP response status codes
+The last example combines all previous knowledge.
+After the start of the server, an empty database in a `db.json` file is created.
+Using a whole range of request at our disposal we can populate database with patients (`POST`), display all or one patients (`GET`), erase (`DELETE`) and modify (`PUT`) them.
+Each request is followed by a response with an appropriate HTTP response status code:
 
 | Response Code | Name        | Description                      |
 | ------------: | ----------- | -------------------------------- |
 |           200 | OK          | Request has succeeded            |
 |           400 | Bad request | Invalid syntax of a request      |
 |           404 | Not found   | Requested resource was not found |
+
+It is worth to notice that the same URL might have different meaning in different usage context. For example a request with an URL `/patient/:id` will:
+
+* Return patient with an `id` if we use GET method
+* Remove patient with an `id` if we use DELETE method
+* Update patient with an `id` if we use PUT method
+
+This is similar to having a single reference (URL) and passing it to different functions (HTTP methods).
+This approach allows to think about the resources and their placement first.
 
 ### Future extensions
 
