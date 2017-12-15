@@ -64,15 +64,44 @@ curl -X DELETE "localhost:3000/item/bicycle"
 
 ### 01_HttpServer
 
+The first example shows how to import _Express_ framework and create HTTP web server with it.
+The server listens for requests on port `3000`.
+The port number can be change to any valid, not used port.
+This piece of code handles two requests using GET method:
+
+* Show main page (URL: `/`)
+* Show _hello_ subpage (URL: `/hello`).
+
+Each incoming request is printed out using `printReqSummary` function.
+This method will help us until the end of the tutorial.
+
 ### 02_UrlParameters
+
+The second example extends previous HTTP server with extracting parameters and queries from request URLs.
+Parameters belong to the URL path, thus they need to be marked in the URL pattern (in _Express_ we use colon to mark a parameter in URL e.g. `/hello/:name`).
+This pattern tells us to handle any URL beginning with `/hello/`, followed by single part of a path.
+
+The queries represents additional data passed in URL.
+They are always at the end of URL path after `?` sign.
+A query consists of a key and a value.
+Many queries can be chained using `&` sign.
+For example: `/patient?name=John&surname=Doe`.
 
 ### 03_HttpMethods
 
 ### 04_RestDatabase
 
+HTTP response status codes
+
+| Code | Name        | Description                      |
+| ---- | ----------- | -------------------------------- |
+| 200  | OK          | Request has succeeded            |
+| 400  | Bad request | Invalid syntax of a request      |
+| 404  | Not found   | Requested resource was not found |
+
 ### Future extensions
 
-* Replace [lowdb](https://github.com/typicode/lowdb) with your favourite database (e.g. [PostgreSQL](https://www.postgresql.org/), [MySQL](https://www.mysql.com/), [MongoDB](https://www.mongodb.com/)). Read more about [Express + databases integration](http://expressjs.com/en/guide/database-integration.html)
+Replace [lowdb](https://github.com/typicode/lowdb) with your favourite database (e.g. [PostgreSQL](https://www.postgresql.org/), [MySQL](https://www.mysql.com/), [MongoDB](https://www.mongodb.com/)). Read more about [Express + databases integration](http://expressjs.com/en/guide/database-integration.html)
 
 ## Additional materials
 
