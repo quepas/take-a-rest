@@ -1,35 +1,69 @@
-var express = require("express");
-var app = express();
+const express = require("express");
+const app = express();
 
-/* Load database related modules */
+// Load database related modules
 const low = require("lowdb");
 const FileSync = require("lowdb/adapters/FileSync");
-/* Store database in db.json file */
+// Store database in db.json file
 const adapter = new FileSync("04_RestDatabase/db.json");
 const db = low(adapter);
 
-/* Fill database with empty "patient" array */
-db.defaults({ patient: [] }).write();
+// >>> Helper functions
+function printReqSummary(request) {
+  console.log(`Handling ${request.method} ${request.originalUrl}`);
+}
 
-/* GET / -- Show main page */
+// Get patient from database with given id
+function getPatient(id) {
+  return db
+    .get("patients")
+    .find({ id: id })
+    .value();
+}
+
+// Check if database contains any patients
+function hasPatients() {
+  return (
+    db
+      .get("patients")
+      .size()
+      .value() > 0
+  );
+}
+
+// Generate id for a new patient
+function generatePatientId() {
+  if (hasPatients()) {
+    const lastPatient = db
+      .get("patients")
+      .last()
+      .value();
+    return lastPatient.id + 1;
+  } else {
+    return 1;
+  }
+}
+
+// Fill database with empty "patient" array
+db.defaults({ patients: [] }).write();
+
+// GET / -- Show main page
 app.get("/", function(request, response) {
   printReqSummary(request);
-  response
-    .status(200)
-    .send(
-      "<h2>REST + Database</h2><ul>" +
-        "<li>Show all patients (GET /patient )</li>" +
-        "<li>Show specific patient (GET /patient/:id)</li>" +
-        "<li>Add new patient (POST /patient?name=:NAME&surname=:SURNAME)</li>" +
-        "<li>Modify existing patient (PUT /patient/:id?name=:NAME&surname=:SURNAME)</li>" +
-        "<li>Remove patient (DELETE /patient/:id)</li></ul>"
-    );
+  response.status(200).send(
+    `<h2>REST + Database</h2><ul>
+        <li>Show all patients (GET /patient )</li>
+        <li>Show specific patient (GET /patient/:id)</li>
+        <li>Add new patient (POST /patient?name=:NAME&surname=:SURNAME)</li>
+        <li>Modify existing patient (PUT /patient/:id?name=:NAME&surname=:SURNAME)</li>
+        <li>Remove patient (DELETE /patient/:id)</li></ul>`
+  );
 });
 
-/* GET /patient -- Show all patients */
+// GET /patient -- Show all patients
 app.get("/patient", function(request, response) {
   printReqSummary(request);
-  if (anyPatients()) {
+  if (hasPatients()) {
     const patients = db.get("patient").value();
     response.status(200).send(JSON.stringify(patients));
   } else {
@@ -37,10 +71,10 @@ app.get("/patient", function(request, response) {
   }
 });
 
-/* GET /patient/:id -- Show patient with :id */
+// GET /patient/:id -- Show patient with :id
 app.get("/patient/:id", function(request, response) {
   printReqSummary(request);
-  if (anyPatients()) {
+  if (hasPatients()) {
     const id = Number(request.params.id);
     const patient = getPatient(id);
     if (patient !== undefined) {
@@ -53,7 +87,7 @@ app.get("/patient/:id", function(request, response) {
   }
 });
 
-/* POST /patient?name=:NAME&surname=:SURNAME -- Add new patient */
+// POST /patient?name=:NAME&surname=:SURNAME -- Add new patient
 app.post("/patient", function(request, response) {
   printReqSummary(request);
   const name = request.query.name;
@@ -66,14 +100,14 @@ app.post("/patient", function(request, response) {
     const newId = generatePatientId();
     const newPatient = { id: newId, name: name, surname: surname };
     db
-      .get("patient")
+      .get("patients")
       .push(newPatient)
       .write();
     response.status(200).send(newPatient);
   }
 });
 
-/* PUT /patient/:id?name=:NAME&surname=:SURNAME -- modify patient with :id */
+// PUT /patient/:id?name=:NAME&surname=:SURNAME -- modify patient with :id
 app.put("/patient/:id", function(request, response) {
   const id = Number(request.params.id);
   const patient = getPatient(id);
@@ -89,7 +123,7 @@ app.put("/patient/:id", function(request, response) {
     } else {
       const updatedPatient = { id: patient.id, name: name, surname: surname };
       db
-        .get("patient")
+        .get("patients")
         .find(patient)
         .assign(updatedPatient)
         .write();
@@ -98,7 +132,7 @@ app.put("/patient/:id", function(request, response) {
   }
 });
 
-/* DELETE /patient/:id -- Remove patient with :id */
+// DELETE /patient/:id -- Remove patient with :id
 app.delete("/patient/:id", function(request, response) {
   printReqSummary(request);
   const id = Number(request.params.id);
@@ -107,7 +141,7 @@ app.delete("/patient/:id", function(request, response) {
     response.status(404).send({ error: "No patient with given id" });
   } else {
     db
-      .get("patient")
+      .get("patients")
       .remove({ id: id })
       .write();
     response.status(200).send({ message: "Patient removed successfully" });
@@ -115,41 +149,3 @@ app.delete("/patient/:id", function(request, response) {
 });
 
 app.listen(3000);
-
-/******************************************************************
- * Helper functions
- ******************************************************************/
-function printReqSummary(request) {
-  console.log(`Handling ${request.method} ${request.originalUrl}`);
-}
-
-/* Get patient from database with given id */
-function getPatient(id) {
-  return db
-    .get("patient")
-    .find({ id: id })
-    .value();
-}
-
-/* Check if database contains any patients */
-function anyPatients() {
-  return (
-    db
-      .get("patient")
-      .size()
-      .value() > 0
-  );
-}
-
-/* Generate id for a new patient */
-function generatePatientId() {
-  if (anyPatients()) {
-    const lastPatient = db
-      .get("patient")
-      .last()
-      .value();
-    return lastPatient.id + 1;
-  } else {
-    return 1;
-  }
-}

@@ -1,7 +1,7 @@
 // Import Express web framework
-var express = require("express");
+const express = require("express");
 // Create main app
-var app = express();
+const app = express();
 
 // Helper function -- print request summary
 function printReqSummary(request) {
@@ -12,7 +12,7 @@ function printReqSummary(request) {
 // GET / -- Show main page
 app.get("/", function(request, response) {
   printReqSummary(request);
-  // Send response to a request (here as a HTML markup)
+  // Send response to the request (here as a HTML markup)
   response.send("<h1>HTTP Server</h1><p>Go to /hello subpage!</p>");
 });
 

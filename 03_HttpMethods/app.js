@@ -1,5 +1,9 @@
-var express = require("express");
-var app = express();
+const express = require("express");
+const app = express();
+
+function printReqSummary(request) {
+  console.log(`Handling ${request.method} ${request.originalUrl}`);
+}
 
 /* Store items collection in this array */
 let items = [];
@@ -8,10 +12,10 @@ let items = [];
 app.get("/", function(request, response) {
   printReqSummary(request);
   response.send(
-    "<h2>HTTP Methods</h2><ul>" +
-      "<li>Show items (GET /item)</li>" +
-      "<li>Add an item (PUT /item/:name)</li>" +
-      "<li>Remove an item (DELETE /item/:name)</li></ul>"
+    `<h1>HTTP Methods</h1><ul>
+      <li>Show items (GET /item)</li>
+      <li>Add an item (PUT /item/:name)</li>
+      <li>Remove an item (DELETE /item/:name)</li></ul>`
   );
 });
 
@@ -48,7 +52,3 @@ app.delete("/item/:name", function(request, response) {
 });
 
 app.listen(3000);
-
-function printReqSummary(request) {
-  console.log(`Handling ${request.method} ${request.originalUrl}`);
-}
