@@ -59,7 +59,9 @@ app.post("/patient", function(request, response) {
   const name = request.query.name;
   const surname = request.query.surname;
   if (name === undefined || surname === undefined) {
-    response.status(400).send({ error: "Missing data (name and/or surname)" });
+    response.status(400).send({
+      error: "Invalid request - missing queries (name and/or surname)"
+    });
   } else {
     const newId = generatePatientId();
     const newPatient = { id: newId, name: name, surname: surname };
@@ -81,9 +83,9 @@ app.put("/patient/:id", function(request, response) {
     const name = request.query.name;
     const surname = request.query.surname;
     if (name === undefined || surname === undefined) {
-      response
-        .status(400)
-        .send({ error: "Missing data (name and/or surname)" });
+      response.status(400).send({
+        error: "Invalid request - missing queries (name and/or surname)"
+      });
     } else {
       const updatedPatient = { id: patient.id, name: name, surname: surname };
       db
