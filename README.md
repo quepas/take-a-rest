@@ -26,7 +26,7 @@ For project installation and management we will use [NPM Package Manager](https:
 ### Installation
 
 * Download and install [node.js](https://nodejs.org/en/download/)
-* Check if these commands work in console: `node` and `npm`
+* Check if these commands work in console: `node --version` and `npm --version`
 * Clone this repository `git clone https://github.com/quepas/take-a-rest`
 * Go to the project directory `cd take-a-rest`
 * Install required packages using NPM command `npm install`
