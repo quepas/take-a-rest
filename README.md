@@ -92,6 +92,8 @@ For example: `/patient?name=John&surname=Doe`.
 In this example we are going beyond GET method (_check table below_).
 The server holds a list of item names.
 Using PUT method and URL `/item/:name` we can add a new item to a list.
+But adding repeatedly the same item will have no effects except for the first time.
+This is a well-known property called [idempotency](http://www.restapitutorial.com/lessons/idempotency.html).
 Current list of item is visible through `GET /item` request.
 In order to remove an item with given name, use `DELETE /item/:name` request.
 
@@ -103,7 +105,7 @@ In order to remove an item with given name, use `DELETE /item/:name` request.
 | DELETE      | Delete resource         |
 
 It is worth to notice that handling different HTTP methods requires only a change of _Express_ method, for example from `app.get()` to `app.put()`.
-But having a proper behaviour of a request (`DELETE` method removes resource at given URL) still depends on a programmer a.k.a you.
+But having a proper behaviour of a request (`DELETE` method removes resource at given URL, [idempotence](http://www.restapitutorial.com/lessons/idempotency.html) property etc.) still depends on a programmer a.k.a you.
 
 ### 04_RestDatabase
 
