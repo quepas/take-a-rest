@@ -51,7 +51,7 @@ db.defaults({ patients: [] }).write();
 app.get("/", function(request, response) {
   printReqSummary(request);
   response.status(200).send(
-    `<h2>REST + Database</h2><ul>
+    `<h1>REST + Database</h1><ul>
         <li>Show all patients (GET /patient )</li>
         <li>Show specific patient (GET /patient/:id)</li>
         <li>Add new patient (POST /patient?name=:NAME&surname=:SURNAME)</li>
