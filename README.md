@@ -110,8 +110,8 @@ But having an excepted behaviour of a request (`DELETE` method removes resource 
 ### 04_RestDatabase
 
 The last example combines all previous knowledge.
-After the start of the server, an empty database in a `db.json` file is created.
-Using a whole range of request at our disposal we can populate database with patients (`POST`), display all or one patients (`GET`), erase (`DELETE`) and modify (`PUT`) them.
+After the start of the server, an empty database in `db.json` file is created.
+Using a whole range of requests, at our disposal, we can populate database with patients (`POST`), display all patients or one (`GET`), erase (`DELETE`) and modify (`PUT`) them.
 Each request is followed by a response with an appropriate HTTP response status code:
 
 | Response Code | Name        | Description                      |
@@ -120,7 +120,7 @@ Each request is followed by a response with an appropriate HTTP response status 
 |           400 | Bad request | Invalid syntax of a request      |
 |           404 | Not found   | Requested resource was not found |
 
-It is worth to notice that the same URL might have different meaning in different usage context. For example a request with an URL `/patient/:id` will:
+It is worth to notice that the same URL might have different meaning in different usage context. For example a request with URL `/patient/:id` will:
 
 * Return patient with an `id` if we use GET method
 * Remove patient with an `id` if we use DELETE method
