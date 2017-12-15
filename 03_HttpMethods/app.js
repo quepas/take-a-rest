@@ -28,7 +28,7 @@ app.get("/item", function(request, response) {
 /* PUT /item/:name -- add (put) new item to the collection */
 app.put("/item/:name", function(request, response) {
   printReqSummary(request);
-  let itemName = request.params.name;
+  const itemName = request.params.name;
   /* Is the item in collection? */
   if (items.includes(itemName)) {
     response.send(`<p>Item "${itemName}" already in collection</p>`);
@@ -41,7 +41,7 @@ app.put("/item/:name", function(request, response) {
 /* DELETE /item/:name -- remove a given item from the collection */
 app.delete("/item/:name", function(request, response) {
   printReqSummary(request);
-  let itemName = request.params.name;
+  const itemName = request.params.name;
   /* Is the item in collection? */
   if (items.includes(itemName)) {
     items = items.filter(item => item !== itemName);
