@@ -94,7 +94,7 @@ The server holds a list of item names.
 Using PUT method and URL `/item/:name` we can add a new item to a list.
 But adding repeatedly the same item will have no effects except for the first time.
 This is a well-known property called [idempotency](http://www.restapitutorial.com/lessons/idempotency.html).
-Current list of item is visible through `GET /item` request.
+Current list of items is visible through `GET /item` request.
 In order to remove an item with given name, use `DELETE /item/:name` request.
 
 | HTTP Method | Description             |
