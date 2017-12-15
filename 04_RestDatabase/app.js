@@ -64,7 +64,7 @@ app.get("/", function(request, response) {
 app.get("/patient", function(request, response) {
   printReqSummary(request);
   if (hasPatients()) {
-    const patients = db.get("patient").value();
+    const patients = db.get("patients").value();
     response.status(200).send(JSON.stringify(patients));
   } else {
     response.status(404).send({ error: "No patients are registered" });
