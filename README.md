@@ -83,21 +83,37 @@ This pattern tells us to handle any URL beginning with `/hello/`, followed by si
 
 The queries represents additional data passed in URL.
 They are always at the end of URL path after `?` sign.
-A query consists of a key and a value.
-Many queries can be chained using `&` sign.
+A single query consists of a key and a value.
+Many queries can be chained with `&` sign.
 For example: `/patient?name=John&surname=Doe`.
 
 ### 03_HttpMethods
+
+In this example we are going beyond GET method (_check table below_).
+The server holds a list of item names.
+Using PUT method and URL `/item/:name` we can add a new item to a list.
+Current list of item is visible through `GET /item` request.
+In order to remove an item with given name, use `DELETE /item/:name` request.
+
+| HTTP Method | Description             |
+| ----------- | ----------------------- |
+| GET         | Get resource            |
+| POST        | Submit new resource     |
+| PUT         | Add or replace resource |
+| DELETE      | Delete resource         |
+
+It is worth to notice that handling different HTTP methods requires only a change of _Express_ method, for example from `app.get()` to `app.put()`.
+But having a proper behaviour of a request (`DELETE` method removes resource at given URL) still depends on a programmer a.k.a you.
 
 ### 04_RestDatabase
 
 HTTP response status codes
 
-| Code | Name        | Description                      |
-| ---- | ----------- | -------------------------------- |
-| 200  | OK          | Request has succeeded            |
-| 400  | Bad request | Invalid syntax of a request      |
-| 404  | Not found   | Requested resource was not found |
+| Response Code | Name        | Description                      |
+| ------------: | ----------- | -------------------------------- |
+|           200 | OK          | Request has succeeded            |
+|           400 | Bad request | Invalid syntax of a request      |
+|           404 | Not found   | Requested resource was not found |
 
 ### Future extensions
 
