@@ -11,10 +11,12 @@
     "01_HttpServer": "node 01_HttpServer/app.js",
     "02_UrlParameters": "node 02_UrlParameters/app.js",
     "03_HttpMethods": "node 03_HttpMethods/app.js",
-    "04_RestDatabase": "node 04_RestDatabase/app.js"
+    "04_RestDatabase": "node 04_RestDatabase/app.js",
+    "05_RestSQL": "node 05_RestSQL/app.js"
   },
   "dependencies": {
     "express": "^4.16.2",
-    "lowdb": "^1.0.0"
+    "lowdb": "^1.0.0",
+    "mysql": "^2.18.1"
   }
 }
