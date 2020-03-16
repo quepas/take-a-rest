@@ -129,6 +129,26 @@ It is worth to notice that the same URL might have different meaning in differen
 This is similar to having a single reference (URL) and passing it to different functions (HTTP methods).
 This approach allows to think about the resources and their placement first.
 
+### 05_RestSQL
+
+This example is all about upgrading!
+We will switch from a single-file database `lowdb` to a full-fledge relational SQL database, namely, [MySQL](https://www.mysql.com/).
+
+First, install [MySQL](https://www.mysql.com/) and prepare our database.
+On Ubuntu, the procedure is as simple as running this command: `sudo apt-get install mysql-server`.
+Then, login to the database shell `mysql -u user -p` where `user` could be `root` or any other username defined by you.
+In the shell, create our database `CREATE DATABASE rest_db;` select it `USE rest_db;`, and finally, create table for our patients in the database:
+
+ ```sql
+ CREATE TABLE patients(id INTEGER NOT NULL AUTO_INCREMENT, name VARCHAR(255), surname VARCHAR(255), PRIMARY KEY(id));
+ ```
+
+ We are all set.
+ Let's move to our script `app.js`.
+The overall structure of the script is the same as from the previous `04_RestDatabase` script.
+Go over each REST request and analyse the changes.
+Did the underlying principles of the REST service change?
+
 ### Future extensions
 
 Replace [lowdb](https://github.com/typicode/lowdb) with your favourite database (e.g. [PostgreSQL](https://www.postgresql.org/), [MySQL](https://www.mysql.com/), [MongoDB](https://www.mongodb.com/)). Read more about [Express + databases integration](http://expressjs.com/en/guide/database-integration.html)
