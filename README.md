@@ -13,6 +13,7 @@ Each presented example tries to answer one question:
 * **02_UrlParameters** - _How to extract URL parameters (and queries) from HTTP requests?_
 * **03_HttpMethods** - _How to use different HTTP methods (e.g. GET, PUT, DELETE)?_
 * **04_RestDatabase** - _How to prepare a simple REST API integrated with even simpler database?_
+* **05_RestSQL** - _How to prepare a simple REST API integrated with a slightly harder-to-use SQL database?_
 
 ### Infrastructure
 
@@ -143,11 +144,23 @@ In the shell, create our database `CREATE DATABASE rest_db;` select it `USE rest
  CREATE TABLE patients(id INTEGER NOT NULL AUTO_INCREMENT, name VARCHAR(255), surname VARCHAR(255), PRIMARY KEY(id));
  ```
 
- We are all set.
- Let's move to our script `app.js`.
+We are all set.
+Let's move to our script `app.js`.
+However, before running the script, set up correctly username and password to the database, here (lines `6`-`12`):
+
+```js
+var db = mysql.createConnection({
+  host: "localhost",
+  user: "your_username",
+  password: "your_password",
+  port: 3306,
+  database: 'rest_db'
+});
+```
+
 The overall structure of the script is the same as from the previous `04_RestDatabase` script.
-Go over each REST request and analyse the changes.
-Did the underlying principles of the REST service change?
+Go over each REST request and analyse what has changed.
+Do the underlying principles of the REST service stay the same?
 
 ### Future extensions
 

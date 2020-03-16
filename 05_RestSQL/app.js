@@ -27,7 +27,7 @@ function printReqSummary(request) {
 // Get patient from database with given id
 function getPatient(id, onSuccess, onFailure) {
   return db.query('SELECT * FROM patients WHERE id = ?', [id], function (err, results, fields) {
-    if (results.length == 0) {
+    if (err || results.length == 0) {
       onFailure()
     } else {
       onSuccess(results[0]);
@@ -35,15 +35,11 @@ function getPatient(id, onSuccess, onFailure) {
   });
 }
 
-// Check if database contains any patients
-function hasPatients(onHasPatients, onZeroPatients) {
+// Check how many patients the database contains
+function getNumPatients(onSuccess) {
   db.query('SELECT COUNT(*) as count FROM patients', function (err, results, fields) {
-    if (results[0].count > 0) {
-      onHasPatients();
-    } else {
-      onZeroPatients();
-    }
-  })
+    onSuccess(results[0].count)
+  });
 }
 
 // GET / -- Show main page
@@ -62,23 +58,27 @@ app.get("/", function (request, response) {
 // GET /patient -- Show all patients
 app.get("/patient", function (request, response) {
   printReqSummary(request);
-  hasPatients(
-    () => {
-      db.query('SELECT * FROM patients', function (error, results, fields) {
-        response.status(200).send(JSON.stringify(results));
+  getNumPatients((numPatients) => {
+    if (numPatients > 0) {
+      db.query('SELECT * FROM patients', function (err, results, fields) {
+        if (err) {
+          response.status(500).send({ error: "Error while showing all patients" });
+        } else {
+          response.status(200).send(JSON.stringify(results));
+        }
       })
-    },
-    () => {
+    } else {
       response.status(404).send({ error: "No patients are registered" });
-    });
+    }
+  });
 });
 
 // GET /patient/:id -- Show patient with :id
 app.get("/patient/:id", function (request, response) {
   printReqSummary(request);
-  hasPatients(
-    () => {
-      const id = Number(request.params.id);
+  getNumPatients((numPatients) => {
+    const id = Number(request.params.id);
+    if (numPatients > 0) {
       getPatient(
         id,
         (patient) => {
@@ -86,10 +86,10 @@ app.get("/patient/:id", function (request, response) {
         }, () => {
           response.status(404).send({ error: "No patient with given id" });
         });
-    },
-    () => {
+    } else {
       response.status(404).send({ error: "No patients are registered" });
-    })
+    }
+  });
 });
 
 // POST /patient?name=:NAME&surname=:SURNAME -- Add new patient
@@ -104,9 +104,12 @@ app.post("/patient", function (request, response) {
   } else {
     const newPatient = { name: name, surname: surname };
     db.query("INSERT INTO patients SET ?", newPatient, function (err, result) {
-      if (err) throw err;
-      newPatient.id = result.insertId;
-      response.status(200).send(newPatient);
+      if (err) {
+        response.status(500).send({ error: "Error while adding a new patient" });
+      } else {
+        newPatient.id = result.insertId;
+        response.status(200).send(newPatient);
+      }
     });
   }
 });
