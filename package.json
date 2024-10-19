@@ -15,7 +15,7 @@
     "05_RestSQL": "node 05_RestSQL/app.js"
   },
   "dependencies": {
-    "express": "^4.21.0",
+    "express": "^4.21.1",
     "lowdb": "^5.0.5",
     "mysql": "^2.18.1"
   }
